@@ -9,7 +9,7 @@
 		"postinstall": "npm run tsc"
 	},
 	"dependencies": {
-		"@discordjs/opus": "^0.7.0",
+		"@discordjs/opus": "^0.8.0",
 		"@discordjs/voice": "^0.7.5",
 		"@prisma/client": "^3.7.0",
 		"axios": "^0.24.0",

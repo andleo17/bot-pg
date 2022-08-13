@@ -1,7 +1,7 @@
+import { SlashCommand } from '@SlashCommand';
 import { MessageEmbed } from 'discord.js';
-import { Command } from '../../structures/Command';
 
-export default new Command({
+export default new SlashCommand({
 	name: 'mute',
 	description: 'Mutea a alguien.',
 	options: [

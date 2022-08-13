@@ -1,4 +1,5 @@
 import {
+	Collection,
 	Message,
 	MessageActionRow,
 	MessageButton,
@@ -9,26 +10,33 @@ import DisTube, { DisTubeOptions, Queue, Song } from 'distube';
 import { MyBot } from './MyBot';
 
 export default class MyDistubeClient extends DisTube {
-	private mPlayer: Message;
+	private messagePlayers: Collection<string, Message>;
 
 	public constructor(discordClient: MyBot, options?: DisTubeOptions) {
 		super(discordClient, options);
+		this.messagePlayers = new Collection();
 
 		this.on('error', (_, e) => {
 			console.error(e);
 		});
 
-		this.on('playSong', (_, e) => {
-			console.log('Reproduciendo:', e.name);
+		this.on('playSong', (q, _) => {
+			const message = this.messagePlayers.get(q.id);
+			if (message) message.edit(this.getPlayer(q.id));
+		});
+
+		this.on('deleteQueue', async (q) => {
+			const message = this.messagePlayers.get(q.id);
+			if (message) await message.delete();
 		});
 	}
 
-	public set messagePlayer(v: Message) {
-		if (v.inGuild()) this.mPlayer = v;
+	public getMessagePlayer(guildId: string): Message {
+		return this.messagePlayers.get(guildId);
 	}
 
-	public get messagePlayer(): Message {
-		return this.mPlayer;
+	public setMessagePlayer(guildId: string, message: Message) {
+		this.messagePlayers.set(guildId, message);
 	}
 
 	public getPlayer(guildId: string): MessageOptions {

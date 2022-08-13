@@ -14,11 +14,16 @@
 		"skipDefaultLibCheck": true,
 		"resolveJsonModule": true,
 		"importHelpers": true,
-		"baseUrl": ".",
+		"noImplicitReturns": true,
+		"baseUrl": "./src/",
 		"paths": {
-			"@structures/*": ["src/structures/*"]
+			"@typings": ["../types"],
+			"@SlashCommand": ["structures/SlashCommand"],
+			"@PrefixCommand": ["structures/PrefixCommand"],
+			"@structures/*": ["structures/*"],
+			"@utils/*": ["utils/*"]
 		}
 	},
-	"include": ["src", "enviroment.d.ts"],
+	"include": ["src", "types"],
 	"exclude": ["node_modules", "**/*.spec.ts"]
 }

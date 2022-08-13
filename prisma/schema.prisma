@@ -11,9 +11,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model GuildConfig {
+model Guilds {
   id               String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
   guildId          String   @unique
-  musicChannel     String
+  prefix           String
+  musicChannel     String?
   eightBallAnswers String[]
+  warns            Warns[]
+  roles            Roles[]
+}
+
+model Warns {
+  id        String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  userId    String
+  reason    String
+  createdBy String
+  createdAt DateTime @default(now())
+  guildId   String   @db.ObjectId
+  guild     Guilds   @relation(fields: [guildId], references: [id])
+}
+
+model Roles {
+  id       String  @id @default(dbgenerated()) @map("_id") @db.ObjectId
+  roleId   String
+  emojiId  String?
+  guildsId String  @db.ObjectId
+  guild    Guilds  @relation(fields: [guildsId], references: [id])
 }

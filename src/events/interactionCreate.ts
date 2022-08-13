@@ -4,9 +4,8 @@ export default new Event('interactionCreate', async (client, interaction) => {
 	if (!interaction.inCachedGuild()) return;
 	if (interaction.isCommand()) {
 		try {
-			const command = client.getCommandHandler(interaction.commandName);
+			const command = client.getSlashCommandHandler(interaction.commandName);
 			if (!command) return interaction.reply('El comando no existe');
-
 			command.run({ client, interaction });
 		} catch (error) {
 			interaction.reply({ ephemeral: true, content: error.message });

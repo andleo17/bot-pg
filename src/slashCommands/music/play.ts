@@ -1,7 +1,7 @@
+import { SlashCommand } from '@SlashCommand';
 import { MessageEmbed, TextChannel } from 'discord.js';
-import { Command } from '../../structures/Command';
 
-export default new Command({
+export default new SlashCommand({
 	name: 'play',
 	description: 'Reproduce música de YouTube',
 	options: [
@@ -21,14 +21,14 @@ export default new Command({
 	],
 	run: async ({ client, interaction }) => {
 		try {
-			const { db, distube } = client;
+			const { db } = client;
+			const distube: any = '';
 			await interaction.deferReply();
 
 			const voiceChannel = interaction.member.voice.channel;
 			if (!voiceChannel)
-				return interaction.reply({
+				return interaction.editReply({
 					content: 'Debes conectarte a un canal de voz pe ctmr',
-					ephemeral: true,
 				});
 
 			const songName = interaction.options.getString('canción');
@@ -46,11 +46,11 @@ export default new Command({
 
 			await distube.playVoiceChannel(voiceChannel, song);
 
-			const messagePlayer = distube.messagePlayer;
+			const messagePlayer = distube.getMessagePlayer(interaction.guildId);
 			const player = distube.getPlayer(interaction.guildId);
 
 			if (!messagePlayer) {
-				const guildConfig = await db.guildConfig.findUnique({
+				const guildConfig = await db.guilds.findUnique({
 					where: { guildId: interaction.guildId },
 				});
 				let musicChannelInGuild: TextChannel;
@@ -77,7 +77,8 @@ export default new Command({
 						interaction.channel;
 				}
 
-				distube.messagePlayer = await musicChannelInGuild.send(player);
+				const sentMessagePlayer = await musicChannelInGuild.send(player);
+				distube.setMessagePlayer(interaction.guildId, sentMessagePlayer);
 			} else {
 				messagePlayer.edit(player);
 			}

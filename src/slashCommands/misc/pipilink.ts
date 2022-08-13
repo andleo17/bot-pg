@@ -1,7 +1,6 @@
-import { Command } from '../../structures/Command';
-import path from 'path';
+import { SlashCommand } from '@SlashCommand';
 
-export default new Command({
+export default new SlashCommand({
 	name: 'pipilink',
 	description: 'Sorpresa',
 	run: async ({ interaction }) => {

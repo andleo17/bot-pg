@@ -1,8 +1,8 @@
 import { MessageEmbed } from 'discord.js';
-import { Command } from '../../structures/Command';
-import { pickRandomAnimeGif } from '../../utils/tenorAPI';
+import { pickRandomAnimeGif } from '@utils/tenorAPI';
+import { SlashCommand } from '@SlashCommand';
 
-export default new Command({
+export default new SlashCommand({
 	name: 'abrazo',
 	description: 'Abraza a alguien',
 	options: [

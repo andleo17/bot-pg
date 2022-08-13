@@ -1,6 +1,6 @@
-import { Command } from '../../structures/Command';
+import { SlashCommand } from '@SlashCommand';
 
-export default new Command({
+export default new SlashCommand({
 	name: 'suerte',
 	description: 'Deséale suerte a tu causa.',
 	run: async ({ interaction }) => {

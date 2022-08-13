@@ -1,8 +1,8 @@
 import { MessageEmbed } from 'discord.js';
-import { Command } from '../../structures/Command';
+import { SlashCommand } from '@SlashCommand';
 import { pickRandomAnimeGif } from '../../utils/tenorAPI';
 
-export default new Command({
+export default new SlashCommand({
 	name: 'beso',
 	description: 'Dale un besito a alguien del server uwu.',
 	options: [

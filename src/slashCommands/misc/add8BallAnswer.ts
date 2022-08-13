@@ -1,4 +1,4 @@
-import { Command } from '../../structures/Command';
+import { Command } from '../../structures/SlashCommand';
 
 export default new Command({
 	name: 'agregar8ball',

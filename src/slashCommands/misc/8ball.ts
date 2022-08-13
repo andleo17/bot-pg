@@ -1,7 +1,7 @@
+import { SlashCommand } from '@SlashCommand';
 import { MessageEmbed } from 'discord.js';
-import { Command } from '../../structures/Command';
 
-export default new Command({
+export default new SlashCommand({
 	name: '8ball',
 	description: 'Deja que el bot responda a tu pregunta.',
 	options: [
@@ -15,7 +15,7 @@ export default new Command({
 	run: async ({ client, interaction }) => {
 		await interaction.deferReply();
 		const defaultAnswers = ['Sí :D', 'No :('];
-		const guildConfig = await client.db.guildConfig.findUnique({
+		const guildConfig = await client.db.guilds.findUnique({
 			where: { guildId: interaction.guildId },
 		});
 		const question = interaction.options.getString('pregunta');

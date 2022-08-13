@@ -1,6 +1,6 @@
-import { Command } from '../../structures/Command';
+import { SlashCommand } from '@SlashCommand';
 
-export default new Command({
+export default new SlashCommand({
 	name: 'setmusicchannel',
 	description:
 		'Configura un canal para que el bot de música pueda hacer su spam.',
@@ -18,7 +18,7 @@ export default new Command({
 			await interaction.deferReply({ ephemeral: true });
 			const channel = interaction.options.getChannel('canal', true);
 
-			await client.db.guildConfig.upsert({
+			await client.db.guilds.upsert({
 				where: { guildId: interaction.guildId },
 				create: { guildId: interaction.guildId, musicChannel: channel.id },
 				update: { musicChannel: channel.id },
